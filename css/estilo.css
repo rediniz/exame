@@ -11,3 +11,20 @@ body {
   .card {
     height: 100%;
   }
+
+  .conteudo {
+    min-height: 400px;
+  }
+
+  h1 {
+    color: #fd7e14;
+  }
+  
+  .btn-primary:hover {
+    background-color: #fd7e14 !important;
+    border-color: #db6809;
+  }
+
+  .navbar {
+    font-size: 18px;
+  }

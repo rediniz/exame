@@ -29,6 +29,7 @@ function save($table = null, $data = null) {
   
 	$columns = null;
 	$values = null;
+	$id_inserido = null;
   
 	foreach ($data as $key => $value) {
 	  $columns .= trim($key, "'") . ",";
@@ -42,7 +43,9 @@ function save($table = null, $data = null) {
 	$sql = "INSERT INTO " . $table . "($columns)" . " VALUES " . "($values);";
   
 	try {
-	  $database->query($sql);
+		$database->query($sql);
+		
+		$id_inserido = mysqli_insert_id($database);
   
 	  $_SESSION['message'] = 'Registro cadastrado com sucesso.';
 	  $_SESSION['type'] = 'success';
@@ -55,4 +58,6 @@ function save($table = null, $data = null) {
 	} 
   
 	close_database($database);
+
+	return $id_inserido;
   }

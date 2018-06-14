@@ -8,14 +8,13 @@ function cadastrar() {
     if (!empty($_POST['questao'])) {
         $questao = $_POST['questao'];
         $alternativas = $_POST['alternativas'];
+
+        $questao_id = save('questao', $questao);
         
         foreach ($alternativas as $alternativa) {
-            echo $alternativa["letra"];
-            echo $alternativa["descricao"];
+            $alternativa["questao_id"] = $questao_id;
+            save('alternativa', $alternativa);
         }
-        //$alternativas = $questao
-        //print_r($questao);
-        //save('professor', $professor);
-        //header('location: index.php');
+        
     }
 }
