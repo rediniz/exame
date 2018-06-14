@@ -11,10 +11,10 @@
   <title>Heroic Features - Start Bootstrap Template</title>
 
   <!-- Bootstrap core CSS -->
-  <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="<?php echo BASEURL; ?>node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Custom styles for this template -->
-  <link href="css/estilo.css" rel="stylesheet">
+  <link href="<?php echo BASEURL; ?>css/estilo.css" rel="stylesheet">
 
 </head>
 
