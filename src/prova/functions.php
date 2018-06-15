@@ -50,5 +50,7 @@ function cadastrar() {
             $prova_questao["questao_id"] = $questao["id"];
             save('prova_questao', $prova_questao);
         }
+
+        salva_prova_alunos($prova_id,  $prova["data_criacao"]);
     }
 }

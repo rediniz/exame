@@ -44,6 +44,8 @@ body {
 
   .card-imagem {
     width: 60%;
+    margin-left: 50px;
+    margin-top: 10px;
   }
 
   .bg-azul {

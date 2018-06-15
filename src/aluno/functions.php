@@ -91,6 +91,14 @@ function responder(){
 
 function exibe_provas(){
     $aluno_id = $_SESSION["aluno_id"];
-    get_provas_aluno($aluno_id);
+    $provas = get_provas_aluno($aluno_id);
+    foreach ($provas as $prova) {
+        $respondida = $prova["respondida"];
+        if($respondida == 'N'){
+            print "<p>Prova ".$prova["prova_id"]." - <a href='".BASEURL."src/aluno/responder.php?prova_id=".$prova["prova_id"]."'>Responder</a></p>";
+        } else {
+            print "<p>Prova ".$prova["prova_id"]." - Respondida</p>";
+        }
+    }
 
 }

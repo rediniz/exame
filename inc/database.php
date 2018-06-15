@@ -169,7 +169,7 @@ function get_questoes_prova($prova_id) {
 }
 
 /**
- *  Pesquisa as provas não respondidas de um aluno
+ *  Pesquisa as provas de um aluno
  */
 function get_provas_aluno($aluno_id) {
   
@@ -177,7 +177,7 @@ function get_provas_aluno($aluno_id) {
 	$provas = [];
 
 	try {
-		$sql = "SELECT prova_id from aluno_prova where aluno_id = ".$aluno_id." and respondida = 'N'";
+		$sql = "SELECT prova_id, respondida from aluno_prova where aluno_id = ".$aluno_id."";
 		$result = $database->query($sql);
 		
 		while ($row = $result->fetch_assoc()) {
@@ -200,14 +200,33 @@ function get_provas_aluno($aluno_id) {
 function set_prova_respondida($aluno_id, $prova_id) {
   
 	$database = open_database();
+
+	try {
+		$sql = "UPDATE aluno_prova set respondida = 'S' WHERE aluno_id = ".$aluno_id." AND prova_id = ".$prova_id;
+		$database->query($sql);
+
+	} catch (Exception $e) {
+	  $_SESSION['message'] = $e->GetMessage();
+	  $_SESSION['type'] = 'danger';
+  }
+	
+	close_database($database);
+}
+
+function salva_prova_alunos($prova_id, $data){
+
+	$database = open_database();
 	$provas = [];
 
 	try {
-		$sql = "SELECT prova.id from aluno_prova where aluno_id = ".$aluno_id." and respondida = 'N'";
+		$sql = "SELECT id from aluno";
 		$result = $database->query($sql);
-		
+
 		while ($row = $result->fetch_assoc()) {
-			array_push($provas, $row);
+
+			$aluno_id = $row["id"];
+			$sql2 = "INSERT INTO aluno_prova (aluno_id, prova_id, data) VALUES (".$aluno_id.", ".$prova_id.", '".$data."');";
+			$database->query($sql2);
 		} 
 	
 	} catch (Exception $e) {
@@ -216,8 +235,6 @@ function set_prova_respondida($aluno_id, $prova_id) {
   }
 	
 	close_database($database);
-
-	return $provas;
 }
 
 function login($matricula, $senha, $tipo){

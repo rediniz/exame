@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-12">
             <h1>Minhas provas</h1>
-            
+            <?php  exibe_provas(); ?>
         </div>
     </div>
 </div>
