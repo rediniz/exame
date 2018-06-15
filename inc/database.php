@@ -94,6 +94,7 @@ function get_categorias() {
 function get_questoes_categoria($categoria_id) {
   
 	$database = open_database();
+	$questoes = [];
 
 	try {
 	  if ($categoria_id) {
@@ -101,7 +102,7 @@ function get_questoes_categoria($categoria_id) {
 	    $result = $database->query($sql);
 	    
 	    while ($row = $result->fetch_assoc()) {
-				print "<option value=".$row["id"].">".$row["enunciado"]."</option>";
+				array_push($questoes, $row);
 			} 
 	    
 	  }
@@ -111,6 +112,8 @@ function get_questoes_categoria($categoria_id) {
   }
 	
 	close_database($database);
+
+	return $questoes;
 }
 
 /**
@@ -137,4 +140,36 @@ function get_alternativas_questao($questao_id) {
 	close_database($database);
 
 	return $alternativas;
+}
+
+/**
+ *  Pesquisa as questões de uma prova
+ */
+function get_questoes_prova($prova_id) {
+  
+	$database = open_database();
+	$questoes = [];
+
+	try {
+		$sql = "SELECT questao.id, questao.enunciado, questao.categoria_id FROM prova_questao JOIN questao WHERE prova_id = ".$prova_id;
+		$result = $database->query($sql);
+		
+		while ($row = $result->fetch_assoc()) {
+			array_push($questoes, $row);
+		} 
+	
+	} catch (Exception $e) {
+	  $_SESSION['message'] = $e->GetMessage();
+	  $_SESSION['type'] = 'danger';
+  }
+	
+	close_database($database);
+
+	return $questoes;
+}
+
+
+function clear_messages(){
+	unset($_SESSION['message']);
+	unset($_SESSION['type']);
 }

@@ -1,5 +1,6 @@
 <?php 
-    require_once('functions.php'); 	  
+    require_once('functions.php');
+    $_SESSION["professor_id"] = 2; 	  
     cadastrar();	
 ?>
 <?php include(HEADER_TEMPLATE); ?>
@@ -8,7 +9,7 @@
     <div class="row">
         <div class="col-12">
             <h1>Cadastro de prova</h1>
-            <form action="cadastrar.php" method="post">
+            <form action="cadastrar.php" method="post" id="form_cadastro_prova">
                 <div class="form-group">
                     <label for="categoria">Categoria</label>
                     <select id="categoria_questao" class="form-control" required>
@@ -17,12 +18,13 @@
                 </div>
                 <div class="form-group">
                     <label for="questoes">Questões</label>
-                    <select name="questoes[alt1][letra]" id="questoes" class="form-control">
+                    <select id="questoes" class="form-control">
                     </select>
                     <br>
-                    <button class="btn btn-primary" id="adicionar_questao">Adicionar</button>
+                    <button type="button" class="btn btn-primary" id="adicionar_questao">Adicionar</button>
                 </div>
-                <button type="submit" class="btn btn-primary">Cadastrar</button>
+                <div id="div_questoes" class="mb-5"></div>
+                <button type="submit" class="btn btn-primary">Cadastrar prova</button>
             </form>
             <br>
             <?php if (!empty($_SESSION['message'])) : ?>
@@ -37,5 +39,6 @@
         </div>
     </div>
 </div>
+<script src="<?php echo BASEURL; ?>js/prova.js"></script>
 
 <?php include(FOOTER_TEMPLATE); ?>

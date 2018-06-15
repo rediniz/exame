@@ -12,8 +12,8 @@ $(document).ready(function(){
         $.ajax({
             url: "functions.php",
             data: {
-                get_categorias: "",
-                categoria: $("#categoria_questao").val()
+                get_questoes_categoria: "",
+                categoria_id: $("#categoria_questao").val()
             },
             type: 'POST',
             context: this,
@@ -45,7 +45,7 @@ $(document).ready(function(){
             context: this,
             success: function (alternativas) {
                 contador_questoes ++;
-                insere_questao_prova(enunciado,alternativas);
+                insere_questao_prova(questao_id,enunciado,alternativas);
             },
             error: function (data) {
                 console.log("Erro: " + data.responseText);
@@ -53,25 +53,48 @@ $(document).ready(function(){
         });
     }
 
-    function insere_questao_prova(enunciado, alternativas){
+    function insere_questao_prova(questao_id,enunciado, alternativas){
         var html = "";
-        html += "<div id='questao"+contador_questoes+"'>";
-        html += "   <div class='card'>";
+        html += "<div id='questao"+questao_id+"' class='questao-selecionada'>";
+        html += "   <div class='card mb-3'>";
+        html += "<div class='card-header numero-questao'>Questão "+contador_questoes+"</div>";
         html += "       <div class='card-body'>";
-        html += "           <h5 class='card-title'>Questão "+contador_questoes+"</h5>";
-        html += "           <p class='card-text'>"+enunciado+"</p>";
+        html += "           <h5 class='card-title'>"+enunciado+"</h5>";
         html += "           <p class='card-text'>";
         html += "               "+alternativas+"";
         html += "           </p>";
         html += "       </div>";
         html += "       <div class='card-footer'>";
-        html += "           <button class='btn btn-default btn-sm'>Remover</button>";
+        html += "           <button type='button' class='btn btn-default btn-sm remover' data-id="+questao_id+">Remover</button>";
         html += "       </div>";
         html += "   </div>";
+        html += "<input type='hidden' name='questoes[questao"+questao_id+"][id]' value="+questao_id+">";
         html += "</div>";
 
         $("#div_questoes").append(html);
     }
 
+    $(document).on("click", ".remover", function(){
+        var id = $(this).data("id");
+        $("#questao"+id).remove();
+        contador_questoes--;
+        var count = 0;
+        $(".numero-questao").each(function(){
+            count++;
+            $(this).text("Questão " + count);
+        });
+    });
+
+    $("#form_cadastro_prova").submit(function(e){
+        e.preventDefault();
+        var form = this;
+
+        if(contador_questoes == 0){
+            alert("Adicione pelo menos uma questão para a prova.");
+            return false;
+        }
+
+        form.submit();
+    });
 
 });

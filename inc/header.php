@@ -17,6 +17,10 @@
   <!-- Custom styles for this template -->
   <link href="<?php echo BASEURL; ?>css/estilo.css" rel="stylesheet">
 
+  <script src="<?php echo BASEURL; ?>node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="<?php echo BASEURL; ?>node_modules/popper.js/dist/umd/popper.min.js"></script>
+  <script src="<?php echo BASEURL; ?>node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
 </head>
 
 <body>
