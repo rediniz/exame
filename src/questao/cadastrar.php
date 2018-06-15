@@ -1,5 +1,5 @@
 <?php 
-    require_once('functions.php'); 	  
+    require_once('functions.php');	  
     cadastrar();	
 ?>
 <?php include(HEADER_TEMPLATE); ?>
@@ -16,11 +16,7 @@
                 <div class="form-group">
                     <label for="categoria">Categoria</label>
                     <select class="form-control" name="questao[categoria_id]" id="categoria" required>
-                        <option value="1">História</option>
-                        <option value="2">Geografia</option>
-                        <option value="3">Matemática</option>
-                        <option value="4">Ciências</option>
-                        <option value="5">Biologia</option>
+                        <?php carrega_categorias(); ?>
                     </select>
                 </div>
                 <div id="alternativas">
@@ -28,11 +24,10 @@
                         <div class="col-1">
                         <div class="form-group">
                             <select name="alternativas[alt1][letra]" id="alternativa" class="form-control">
-                                <option value="A">A</option>
+                                <option value="A" selected >A</option>
                                 <option value="B">B</option>
                                 <option value="C">C</option>
                                 <option value="D">D</option>
-                                <option value="E">E</option>
                             </select>
                         </div>
                         </div>
@@ -51,10 +46,9 @@
                         <div class="form-group">
                             <select name="alternativas[alt2][letra]" id="alternativa" class="form-control">
                                 <option value="A">A</option>
-                                <option value="B">B</option>
+                                <option value="B" selected>B</option>
                                 <option value="C">C</option>
                                 <option value="D">D</option>
-                                <option value="E">E</option>
                             </select>
                         </div>
                         </div>
@@ -64,6 +58,50 @@
                         <div class="col-2">
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" name="alternativas[alt2][correta]" value="N">
+                                <label class="form-check-label">Correta</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-1">
+                        <div class="form-group">
+                            <select name="alternativas[alt3][letra]" id="alternativa" class="form-control">
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C" selected>C</option>
+                                <option value="D">D</option>
+
+                            </select>
+                        </div>
+                        </div>
+                        <div class="col-8">
+                            <textarea class="form-control" name="alternativas[alt3][descricao]" id="descricao" rows="1" placeholder="Descrição"></textarea>
+                        </div>
+                        <div class="col-2">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="alternativas[alt3][correta]" value="N">
+                                <label class="form-check-label">Correta</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-1">
+                        <div class="form-group">
+                            <select name="alternativas[alt4][letra]" id="alternativa" class="form-control">
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D" selected>D</option>
+        
+                            </select>
+                        </div>
+                        </div>
+                        <div class="col-8">
+                            <textarea class="form-control" name="alternativas[alt4][descricao]" id="descricao" rows="1" placeholder="Descrição"></textarea>
+                        </div>
+                        <div class="col-2">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="alternativas[alt4][correta]" value="N">
                                 <label class="form-check-label">Correta</label>
                             </div>
                         </div>

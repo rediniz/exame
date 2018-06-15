@@ -49,3 +49,9 @@ body {
   .bg-azul {
     background-color:#1b92a2;
   }
+
+  option {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }

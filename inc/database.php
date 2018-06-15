@@ -60,4 +60,81 @@ function save($table = null, $data = null) {
 	close_database($database);
 
 	return $id_inserido;
+	}
+	
+/**
+ *  Pesquisa categorias
+ */
+function get_categorias() {
+  
+	$database = open_database();
+	$categorias = [];
+
+	try {
+		$sql = "SELECT * FROM categoria";
+		$result = $database->query($sql);
+		
+		while ($row = $result->fetch_assoc()) {
+			array_push($categorias, $row);
+		} 
+	
+	} catch (Exception $e) {
+	  $_SESSION['message'] = $e->GetMessage();
+	  $_SESSION['type'] = 'danger';
   }
+	
+	close_database($database);
+
+	return $categorias;
+}
+
+/**
+ *  Pesquisa questões baseado na categoria
+ */
+function get_questoes_categoria($categoria_id) {
+  
+	$database = open_database();
+
+	try {
+	  if ($categoria_id) {
+	    $sql = "SELECT * FROM questao WHERE categoria_id = " . $categoria_id;
+	    $result = $database->query($sql);
+	    
+	    while ($row = $result->fetch_assoc()) {
+				print "<option value=".$row["id"].">".$row["enunciado"]."</option>";
+			} 
+	    
+	  }
+	} catch (Exception $e) {
+	  $_SESSION['message'] = $e->GetMessage();
+	  $_SESSION['type'] = 'danger';
+  }
+	
+	close_database($database);
+}
+
+/**
+ *  Pesquisa alternativas de uma questão
+ */
+function get_alternativas_questao($questao_id) {
+  
+	$database = open_database();
+	$alternativas = [];
+
+	try {
+		$sql = "SELECT * FROM alternativa WHERE questao_id = ".$questao_id;
+		$result = $database->query($sql);
+		
+		while ($row = $result->fetch_assoc()) {
+			array_push($alternativas, $row);
+		} 
+	
+	} catch (Exception $e) {
+	  $_SESSION['message'] = $e->GetMessage();
+	  $_SESSION['type'] = 'danger';
+  }
+	
+	close_database($database);
+
+	return $alternativas;
+}
