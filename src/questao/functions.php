@@ -3,6 +3,8 @@
 require_once('../../config.php');
 require_once(DBAPI);
 
+if(!isset($_SESSION)) session_start();
+
 function carrega_categorias(){
     $categorias = get_categorias();
     foreach ($categorias as $categoria) {

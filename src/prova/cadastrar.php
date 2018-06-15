@@ -1,6 +1,5 @@
 <?php 
-    require_once('functions.php');
-    $_SESSION["professor_id"] = 2; 	  
+    require_once('functions.php'); 
     cadastrar();	
 ?>
 <?php include(HEADER_TEMPLATE); ?>

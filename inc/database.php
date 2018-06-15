@@ -168,6 +168,86 @@ function get_questoes_prova($prova_id) {
 	return $questoes;
 }
 
+/**
+ *  Pesquisa as provas não respondidas de um aluno
+ */
+function get_provas_aluno($aluno_id) {
+  
+	$database = open_database();
+	$provas = [];
+
+	try {
+		$sql = "SELECT prova_id from aluno_prova where aluno_id = ".$aluno_id." and respondida = 'N'";
+		$result = $database->query($sql);
+		
+		while ($row = $result->fetch_assoc()) {
+			array_push($provas, $row);
+		} 
+	
+	} catch (Exception $e) {
+	  $_SESSION['message'] = $e->GetMessage();
+	  $_SESSION['type'] = 'danger';
+  }
+	
+	close_database($database);
+
+	return $provas;
+}
+
+/**
+ *  Marca uma prova como respondida
+ */
+function set_prova_respondida($aluno_id, $prova_id) {
+  
+	$database = open_database();
+	$provas = [];
+
+	try {
+		$sql = "SELECT prova.id from aluno_prova where aluno_id = ".$aluno_id." and respondida = 'N'";
+		$result = $database->query($sql);
+		
+		while ($row = $result->fetch_assoc()) {
+			array_push($provas, $row);
+		} 
+	
+	} catch (Exception $e) {
+	  $_SESSION['message'] = $e->GetMessage();
+	  $_SESSION['type'] = 'danger';
+  }
+	
+	close_database($database);
+
+	return $provas;
+}
+
+function login($matricula, $senha, $tipo){
+
+	$tabela = ($tipo == "a") ? "aluno" : "professor";
+
+	$database = open_database();
+	$achado = null;
+
+	try {
+		$sql = "SELECT id from ".$tabela." WHERE matricula=".$matricula." AND senha=".$senha;
+		$result = $database->query($sql);
+		
+		if ($result->num_rows > 0) {		      
+			$achado = $result->fetch_assoc();		
+			$achado["tipo"] = $tipo;    
+		}
+		
+	
+	} catch (Exception $e) {
+	  $_SESSION['message'] = $e->GetMessage();
+	  $_SESSION['type'] = 'danger';
+  }
+	
+	close_database($database);
+
+	return $achado;
+
+}
+
 
 function clear_messages(){
 	unset($_SESSION['message']);

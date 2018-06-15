@@ -3,6 +3,8 @@
 require_once('../../config.php');
 require_once(DBAPI);
 
+if(!isset($_SESSION)) session_start();
+
 function cadastrar_aluno() {
 
     if (!empty($_POST['aluno'])) {
@@ -27,7 +29,7 @@ function montar_prova() {
             $alternativas_html = "<ul class='list-group'>";
 
             foreach ($alternativas as $alternativa) {
-                $alternativas_html .= "<li class='list-group-item'><input type='checkbox' value=".$alternativa['letra']."> <b>".$alternativa['letra']."</b> - ".$alternativa['descricao']."</li>";
+                $alternativas_html .= "<li class='list-group-item'><input type='checkbox' name='respostas[".$questao["id"]."]' value=".$alternativa['letra']."> <b>".$alternativa['letra']."</b> - ".$alternativa['descricao']."</li>";
             }
 
             $alternativas_html.= "</ul>";
@@ -45,7 +47,8 @@ function montar_prova() {
             $html .= "</div>";
         }
 
-        $html.= "<button type='submit' class='btn btn-primary'>Responder</button>";
+        $html.= "<button type='submit' class='btn btn-primary'>Salvar respostas</button>";
+        $html.= "<input type='hidden' name='prova_id' value=".$prova_id.">";
 
         print $html;
     } else {
@@ -63,4 +66,31 @@ if(isset($_POST['carregar_alternativas_questao'])){
         print "<li>".$alternativa["letra"]." - ".$alternativa["descricao"]."</li>";
     }
     print "</ul>";
+}
+
+function responder(){
+
+    if(isset($_POST["prova_id"])){
+        $aluno_id = $_SESSION["aluno_id"];
+        $prova_id = $_POST["prova_id"];
+        $respostas = $_POST["respostas"];
+
+        foreach ($respostas as $questao_id => $resposta) {
+            $aluno_resposta = array();
+            $aluno_resposta["aluno_id"] = $aluno_id;
+            $aluno_resposta["prova_id"] = $prova_id;
+            $aluno_resposta["questao_id"] = $questao_id;
+            $aluno_resposta["alternativa"] = $resposta;
+            save("aluno_resposta", $aluno_resposta );
+        }
+
+        set_prova_respondida($aluno_id,$prova_id);
+    }
+
+}
+
+function exibe_provas(){
+    $aluno_id = $_SESSION["aluno_id"];
+    get_provas_aluno($aluno_id);
+
 }

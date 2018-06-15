@@ -1,3 +1,13 @@
+
+<?php 
+  if(!isset($_SESSION)) session_start();
+  $tipo = null;
+  if(isset($_SESSION["professor_id"])){
+    $tipo = "p";
+  } else if (isset($_SESSION["aluno_id"])){
+    $tipo = "a";
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,25 +49,48 @@
               <span class="sr-only">(current)</span>
             </a>
           </li>
+          <?php if($tipo == null): ?> 
+          <li class="nav-item">
+            <a class="nav-link" href="<?php echo BASEURL; ?>login.php"><i class="fa fa-sign-in" aria-hidden="true"></i> Login
+            </a>
+          </li>
+          <?php else:?>
+          <?php if($tipo == "p"): ?> 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
               aria-expanded="false">
               <i class="fa fa-question-circle" aria-hidden="true"></i> Questões
             </a>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">Cadastrar</a>
-              <a class="dropdown-item" href="#">Editar</a>
-              <a class="dropdown-item" href="#">Cadastrar Categoria</a>
+              <a class="dropdown-item" href="<?php echo BASEURL; ?>src/questao/cadastrar.php">Cadastrar</a>
+              <a class="dropdown-item" href="<?php echo BASEURL; ?>src/categoria/cadastrar.php">Cadastrar Categoria</a>
+          </div>
           </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">
+              <i class="fa fa-question-circle" aria-hidden="true"></i> Provas
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="<?php echo BASEURL; ?>src/prova/cadastrar.php">Cadastrar</a>
+          </li>
+          <?php else:?>
           <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fa fa-file-text-o" aria-hidden="true"></i> Provas</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">
+              <i class="fa fa-graduation-cap" aria-hidden="true"></i> Aluno
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="<?php echo BASEURL; ?>src/aluno/provas.php">Minhas provas</a>
+              </div>
           </li>
+          </li>
+          <?php endif;?>
           <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Alunos</a>
+            <a class="nav-link" href="<?php echo BASEURL; ?>logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i> Sair</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fa fa-sign-out" aria-hidden="true"></i> Sair</a>
-          </li>
+          <?php endif;?>
         </ul>
       </div>
     </div>

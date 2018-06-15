@@ -1,5 +1,6 @@
 <?php 
     require_once('functions.php'); 
+    responder();
 ?>
 <?php include(HEADER_TEMPLATE); ?>
 
@@ -7,8 +8,10 @@
     <div class="row">
         <div class="col-12">
             <h1>Responder prova</h1>
-            <form action="responder.php" method="post" id="form_cadastro_prova">
+            <form action="responder.php?prova_id=<?php print $_GET["prova_id"]?>" method="post" id="form_cadastro_prova">
+                <br>
                 <?php montar_prova(); ?>
+                <input type='hidden' name="prova_id" value="<?php print $_GET["prova_id"];?>">
             </form>
             <br>
             <?php if (!empty($_SESSION['message'])) : ?>
@@ -23,6 +26,6 @@
         </div>
     </div>
 </div>
-<script src="<?php echo BASEURL; ?>js/prova.js"></script>
+<!-- <script src="<?php echo BASEURL; ?>js/responder.js"></script> -->
 
 <?php include(FOOTER_TEMPLATE); ?>
