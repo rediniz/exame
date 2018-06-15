@@ -151,7 +151,7 @@ function get_questoes_prova($prova_id) {
 	$questoes = [];
 
 	try {
-		$sql = "SELECT questao.id, questao.enunciado, questao.categoria_id FROM prova_questao JOIN questao WHERE prova_id = ".$prova_id;
+		$sql = "SELECT questao.id, questao.enunciado, questao.categoria_id FROM prova_questao JOIN questao ON prova_questao.questao_id = questao.id WHERE prova_id = ".$prova_id;
 		$result = $database->query($sql);
 		
 		while ($row = $result->fetch_assoc()) {
