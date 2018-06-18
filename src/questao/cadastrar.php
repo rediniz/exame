@@ -36,7 +36,7 @@
                         </div>
                         <div class="col-2">
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" name="alternativas[alt1][correta]" value="N">
+                                <input type="checkbox" class="form-check-input" name="alternativas[alt1][correta]" value="S">
                                 <label class="form-check-label">Correta</label>
                             </div>
                         </div>
@@ -57,7 +57,7 @@
                         </div>
                         <div class="col-2">
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" name="alternativas[alt2][correta]" value="N">
+                                <input type="checkbox" class="form-check-input" name="alternativas[alt2][correta]" value="S">
                                 <label class="form-check-label">Correta</label>
                             </div>
                         </div>
@@ -79,7 +79,7 @@
                         </div>
                         <div class="col-2">
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" name="alternativas[alt3][correta]" value="N">
+                                <input type="checkbox" class="form-check-input" name="alternativas[alt3][correta]" value="S">
                                 <label class="form-check-label">Correta</label>
                             </div>
                         </div>
@@ -101,7 +101,7 @@
                         </div>
                         <div class="col-2">
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" name="alternativas[alt4][correta]" value="N">
+                                <input type="checkbox" class="form-check-input" name="alternativas[alt4][correta]" value="S">
                                 <label class="form-check-label">Correta</label>
                             </div>
                         </div>

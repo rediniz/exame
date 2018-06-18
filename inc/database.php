@@ -213,6 +213,9 @@ function set_prova_respondida($aluno_id, $prova_id) {
 	close_database($database);
 }
 
+/**
+ *  Associa uma prova recém-criada aos alunos
+ */
 function salva_prova_alunos($prova_id, $data){
 
 	$database = open_database();
@@ -237,6 +240,86 @@ function salva_prova_alunos($prova_id, $data){
 	close_database($database);
 }
 
+/**
+ *  Associa as provas a um aluno recém-criado
+ */
+function insere_prova_aluno($aluno_id, $data){
+
+	$database = open_database();
+
+	try {
+		$sql = "SELECT id from prova";
+		$result = $database->query($sql);
+
+		while ($row = $result->fetch_assoc()) {
+
+			$prova_id = $row["id"];
+			$sql2 = "INSERT INTO aluno_prova (aluno_id, prova_id, data) VALUES (".$aluno_id.", ".$prova_id.", '".$data."');";
+			$database->query($sql2);
+		} 
+	
+	} catch (Exception $e) {
+	  $_SESSION['message'] = $e->GetMessage();
+	  $_SESSION['type'] = 'danger';
+  }
+	
+	close_database($database);
+}
+
+/**
+ *  Retorna as respostas de um aluno para determinada prova
+ */
+function get_respostas_aluno($aluno_id, $prova_id, $questao_id) {
+  
+	$database = open_database();
+	$respostas = [];
+
+	try {
+		$sql = "SELECT alternativa.questao_id as questao_id, descricao, alternativa as resposta_aluno, letra, correta from aluno_resposta join alternativa on aluno_resposta.questao_id = alternativa.questao_id  where aluno_id = ".$aluno_id." and prova_id = ".$prova_id." and alternativa.questao_id=".$questao_id;
+		$result = $database->query($sql);
+		
+		while ($row = $result->fetch_assoc()) {
+			array_push($respostas, $row);
+		} 
+	
+	} catch (Exception $e) {
+	  $_SESSION['message'] = $e->GetMessage();
+	  $_SESSION['type'] = 'danger';
+  	}
+	
+	close_database($database);
+
+	return $respostas;
+}
+
+/**
+ *  Retorna a quantidade de respostas corretas de um aluno em uma prova
+ */
+function get_qtd_questoes_corretas_aluno($aluno_id, $prova_id) {
+  
+	$database = open_database();
+	$quantidade = 0;
+
+	try {
+		$sql = "SELECT count(*) as quantidade from aluno_resposta join alternativa on aluno_resposta.questao_id = alternativa.questao_id where  aluno_id = ".$aluno_id." and prova_id = ".$prova_id." and correta = 'S' and alternativa = letra";
+		$result = $database->query($sql);
+		
+		$row = $result->fetch_assoc();
+		$quantidade = $row["quantidade"];
+	
+	} catch (Exception $e) {
+	  $_SESSION['message'] = $e->GetMessage();
+	  $_SESSION['type'] = 'danger';
+  	}
+	
+	close_database($database);
+
+	return $quantidade;
+}
+
+/**
+ *  Faz o login, comparando a senha e tipo de usuário no banco
+ */
 function login($matricula, $senha, $tipo){
 
 	$tabela = ($tipo == "a") ? "aluno" : "professor";
@@ -251,6 +334,9 @@ function login($matricula, $senha, $tipo){
 		if ($result->num_rows > 0) {		      
 			$achado = $result->fetch_assoc();		
 			$achado["tipo"] = $tipo;    
+		} else {
+			$_SESSION['message'] = "Login inválido.";
+	  		$_SESSION['type'] = 'danger';
 		}
 		
 	
@@ -265,7 +351,9 @@ function login($matricula, $senha, $tipo){
 
 }
 
-
+/**
+ *  Limpa mensagens na tela
+ */
 function clear_messages(){
 	unset($_SESSION['message']);
 	unset($_SESSION['type']);
